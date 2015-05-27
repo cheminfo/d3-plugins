@@ -9,12 +9,13 @@ d3.hexbin = function() {
       dx,
       dy;
 
-  function hexbin(points) {
+  function hexbin(points, options) {
+    options = options || {};
     var binsById = {};
 
     points.forEach(function(point, i) {
-      var py = y.call(hexbin, point, i) / dy, pj = Math.round(py),
-          px = x.call(hexbin, point, i) / dx - (pj & 1 ? .5 : 0), pi = Math.round(px),
+      var py = y.call(hexbin, point, i) / dy, pj = options.noRound ? py : Math.round(py),
+          px = x.call(hexbin, point, i) / dx - (pj & 1 ? .5 : 0), pi = options.noRound ? px : Math.round(px),
           py1 = py - pj;
 
       if (Math.abs(py1) * 3 > 1) {
